@@ -22,8 +22,8 @@ class ScrollingActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
 
-        //val service = RetrofitClientInstance.retrofitInstance?.create(GetNewsService::class.java)
-        Log.d("This log", "hello!")
+        //error here on down line
+        val service = RetrofitClientInstance.retrofitInstance?.create(GetNewsService::class.java)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
