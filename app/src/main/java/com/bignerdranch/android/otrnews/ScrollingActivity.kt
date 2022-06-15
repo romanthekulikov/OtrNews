@@ -1,6 +1,7 @@
 package com.bignerdranch.android.otrnews
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -22,6 +23,7 @@ class ScrollingActivity : AppCompatActivity() {
         }
 
         //val service = RetrofitClientInstance.retrofitInstance?.create(GetNewsService::class.java)
+        Log.d("This log", "hello!")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
