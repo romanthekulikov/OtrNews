@@ -1,4 +1,4 @@
-package com.bignerdranch.android.otrnews
+  package com.bignerdranch.android.otrnews
 
 import android.os.Bundle
 import android.util.Log
