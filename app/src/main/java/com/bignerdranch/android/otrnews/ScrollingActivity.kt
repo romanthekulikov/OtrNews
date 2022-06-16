@@ -8,9 +8,10 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import retrofit2.create
 
 
-class ScrollingActivity : AppCompatActivity() {
+  class ScrollingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +22,7 @@ class ScrollingActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-
-        //error here on down line
+        
         val service = RetrofitClientInstance.retrofitInstance?.create(GetNewsService::class.java)
     }
 
