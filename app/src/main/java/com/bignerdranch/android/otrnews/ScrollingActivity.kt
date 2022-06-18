@@ -1,14 +1,17 @@
   package com.bignerdranch.android.otrnews
 
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import retrofit2.create
+import android.widget.Toast
+import com.bignerdranch.android.otrnews.dto.ResponseData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
   class ScrollingActivity : AppCompatActivity() {
@@ -24,6 +27,19 @@ import retrofit2.create
         }
         
         val service = RetrofitClientInstance.retrofitInstance?.create(GetNewsService::class.java)
+        val call = service?.getAllNews()
+        call?.enqueue(object : Callback<ResponseData> {
+            override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
+                val body = response.body()
+                val news = body?.data?.news
+                var size = news?.size
+            }
+
+            override fun onFailure(call: Call<ResponseData>, t: Throwable) {
+                Toast.makeText(applicationContext, "Error reading JSON", Toast.LENGTH_LONG).show()
+            }
+
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

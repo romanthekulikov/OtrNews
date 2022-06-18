@@ -1,12 +1,26 @@
 package com.bignerdranch.android.otrnews.dto
 
+import com.google.gson.annotations.SerializedName
+
 data class News (
-    var id: Int,
-    var title: String,
-    var img: String,
-    var newsDate: String,
-    var annotation: String,
-    var type: Int,
-    var newsDateUts: String,
-    var mobileUrl: String
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("title")
+    val title: String,
+    @SerializedName("img")
+    val image: String,
+    @SerializedName("local_img")
+    val localImage: String,
+    @SerializedName("news_date")
+    val newsDate: String,
+    @SerializedName("annotation")
+    val annotation: String,
+    @SerializedName("id_resource")
+    val idResource: String,
+    @SerializedName("type")
+    val type: String,
+    @SerializedName("news_date_uts")
+    val newsDateUts: String,
+    @SerializedName("mobile_url")
+    val mobileUrl: String
 )
