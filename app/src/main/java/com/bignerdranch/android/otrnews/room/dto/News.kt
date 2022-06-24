@@ -1,10 +1,10 @@
-package com.bignerdranch.android.otrnews.dto
+package com.bignerdranch.android.otrnews.room.dto
 
 import com.google.gson.annotations.SerializedName
 
 data class News (
     @SerializedName("id")
-    val id: String,
+    val idSource: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("img")

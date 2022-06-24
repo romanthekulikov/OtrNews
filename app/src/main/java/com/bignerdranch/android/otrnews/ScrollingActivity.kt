@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import com.bignerdranch.android.otrnews.dto.ResponseData
+import com.bignerdranch.android.otrnews.room.dto.ResponseData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,6 +34,7 @@ import retrofit2.Response
                 val news = body?.data?.news
                 var size = news?.size
             }
+
 
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
                 Toast.makeText(applicationContext, "Error reading JSON", Toast.LENGTH_LONG).show()
