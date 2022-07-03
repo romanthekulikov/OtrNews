@@ -1,46 +1,69 @@
-  package com.bignerdranch.android.otrnews
+package com.bignerdranch.android.otrnews
 
 import android.os.Bundle
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.bignerdranch.android.otrnews.room.dto.News
 import com.bignerdranch.android.otrnews.room.dto.ResponseData
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-  class ScrollingActivity : AppCompatActivity() {
+class ScrollingActivity : AppCompatActivity() {
+    private lateinit var buttonAPI: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scrolling)
-        setSupportActionBar(findViewById(R.id.toolbar))
-        findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout).title = title
-        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+
+        buttonAPI = findViewById(R.id.getButton)
+
+        buttonAPI.setOnClickListener {
+            loadNews()
         }
-        
+    }
+
+    private fun loadNews() {
         val service = RetrofitClientInstance.retrofitInstance?.create(GetNewsService::class.java)
         val call = service?.getAllNews()
         call?.enqueue(object : Callback<ResponseData> {
             override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
+                buttonAPI.visibility = View.INVISIBLE
                 val body = response.body()
                 val news = body?.data?.news
-                var size = news?.size
+                onNewsReceived(news)
             }
-
 
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
+                getNewsFromFile()
                 Toast.makeText(applicationContext, "Error reading JSON", Toast.LENGTH_LONG).show()
             }
-
         })
+    }
+
+    fun getNewsFromFile() {
+        val json = assets.open("list.json").bufferedReader().use { it.readText() }
+        val responseData = Gson().fromJson(json, ResponseData::class.java)
+        onNewsReceived(responseData.data.news)
+    }
+
+    fun onNewsReceived(news: List<News>?) {
+        importNewsToDataBase(news)
+        displayNews(news)
+    }
+
+    fun importNewsToDataBase(news: List<News>?) {
+        val size = news?.size
+    }
+
+    fun displayNews(news: List<News>?) {
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
