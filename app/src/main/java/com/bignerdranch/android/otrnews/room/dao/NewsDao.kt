@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NewsDao {
-    @Query("SELECT * FROM newsTable WHERE id = :newsId")
-    fun getNewsById(newsId: Long) : Flow<NewsDbEntity?>
-    
-    @Insert
-    suspend fun createNews(newsDbEntity: NewsDbEntity)
+//    @Query("SELECT * FROM newsTable WHERE id = :newsId")
+//    fun getNewsById(newsId: Long) : Flow<NewsDbEntity?>
+//
+//    @Insert
+//    suspend fun createNews(newsDbEntity: NewsDbEntity)
 }
