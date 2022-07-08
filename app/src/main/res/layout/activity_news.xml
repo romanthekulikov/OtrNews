@@ -50,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:autoLink="web"
                 android:layout_marginTop="30dp"
                 android:padding="5dp"
                 tools:text="TextView" />
@@ -72,6 +73,7 @@
             android:id="@+id/newsImage"
             android:layout_width="wrap_content"
             android:layout_height="200dp"
+            android:layout_gravity="center_horizontal|center_vertical"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
