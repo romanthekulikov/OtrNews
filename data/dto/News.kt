@@ -1,10 +1,7 @@
-package com.bignerdranch.android.otrnews.room.dto
+package com.bignerdranch.android.otrnews.data.dto
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class News (
     @SerializedName("id")
     val idSource: String,
@@ -26,4 +23,4 @@ data class News (
     val newsDateUts: String,
     @SerializedName("mobile_url")
     val mobileUrl: String
-) : Parcelable
+)
