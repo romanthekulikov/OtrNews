@@ -1,4 +1,4 @@
-package com.bignerdranch.android.otrnews
+package com.bignerdranch.android.otrnews.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.otrnews.databinding.RcNewsitemBinding
-import com.bignerdranch.android.otrnews.room.dto.News
+import com.bignerdranch.android.otrnews.entities.News
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
+
 
 class AdapterNews(
     private var listItems: ArrayList<News>,

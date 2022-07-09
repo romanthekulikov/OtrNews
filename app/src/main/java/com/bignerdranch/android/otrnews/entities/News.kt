@@ -1,13 +1,17 @@
-package com.bignerdranch.android.otrnews.room.dto
+package com.bignerdranch.android.otrnews.entities
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Entity(tableName = "newsTable")
 data class News (
     @SerializedName("id")
-    val idSource: String,
+    @PrimaryKey
+    val id: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("img")

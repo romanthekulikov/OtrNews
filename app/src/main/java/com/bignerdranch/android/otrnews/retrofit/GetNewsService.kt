@@ -1,6 +1,6 @@
-package com.bignerdranch.android.otrnews
+package com.bignerdranch.android.otrnews.retrofit
 
-import com.bignerdranch.android.otrnews.room.dto.ResponseData
+import com.bignerdranch.android.otrnews.entities.ResponseData
 import retrofit2.Call
 import retrofit2.http.GET
 

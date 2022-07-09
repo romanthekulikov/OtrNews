@@ -1,4 +1,4 @@
-package com.bignerdranch.android.otrnews.room.dto
+package com.bignerdranch.android.otrnews.entities
 
 import com.google.gson.annotations.SerializedName
 
