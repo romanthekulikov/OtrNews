@@ -19,7 +19,6 @@ class NewsActivity : AppCompatActivity() {
 		binding = ActivityNewsBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 		
-		
 		val item = intent.getParcelableExtra<News>(INTENT_NEWS_KEY)
 		if (item != null) {
 			binding.apply {
