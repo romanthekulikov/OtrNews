@@ -9,7 +9,6 @@ import com.bignerdranch.android.otrnews.databinding.RcNewsitemBinding
 import com.bignerdranch.android.otrnews.entities.News
 import com.bumptech.glide.Glide
 
-
 class AdapterNews(
     private var listItems: ArrayList<News>,
     private val listener: NewsListener
@@ -51,10 +50,18 @@ class AdapterNews(
             itemView.setOnClickListener{
                 listener.onClickNews(item)
             }
+            
+            itemView.setOnLongClickListener{
+                listener.buildInterestDialog(item)
+                return@setOnLongClickListener true
+            }
         }
     }
     
-    interface NewsListener{
+    
+    
+    interface NewsListener {
         fun onClickNews(news: News)
+        fun buildInterestDialog(news: News)
     }
 }

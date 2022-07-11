@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingTop="10dp"
     android:fitsSystemWindows="true"
-    tools:context=".ScrollingActivity">
+    tools:context=".UninterestingNewsActivity">
 
     <ProgressBar
         android:id="@+id/progress"
@@ -29,30 +29,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="10dp"
+            android:paddingStart="10dp"
             tools:ignore="MissingConstraints">
 
             <Button
-                android:id="@+id/update_news"
+                android:id="@+id/interesting_news"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginEnd="10dp"
                 android:padding="4dp"
                 android:paddingBottom="1dp"
-                android:text="Обновить новости"
-                android:textSize="10sp"
-                tools:ignore="MissingConstraints,SmallSp"
-                tools:layout_editor_absoluteY="16dp" />
-
-            <Button
-                android:id="@+id/non_interesting_news"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginEnd="10dp"
-                android:padding="4dp"
-                android:paddingBottom="1dp"
-                android:text="Не интересные"
+                android:text="Интересные"
                 android:textSize="10sp"
                 tools:ignore="MissingConstraints,SmallSp"
                 tools:layout_editor_absoluteY="16dp" />

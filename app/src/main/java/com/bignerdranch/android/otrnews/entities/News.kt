@@ -1,6 +1,7 @@
 package com.bignerdranch.android.otrnews.entities
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -29,5 +30,8 @@ data class News (
     @SerializedName("news_date_uts")
     val newsDateUts: String,
     @SerializedName("mobile_url")
-    val mobileUrl: String
+    val mobileUrl: String,
+    @ColumnInfo(name = "visibility", defaultValue = "true")
+    val visibility: String
+    
 ) : Parcelable

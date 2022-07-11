@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OtrNews">
         <activity
+            android:name=".UninterestingNewsActivity"
+            android:exported="false" />
+        <activity
             android:name=".NewsActivity"
             android:exported="false" />
         <activity

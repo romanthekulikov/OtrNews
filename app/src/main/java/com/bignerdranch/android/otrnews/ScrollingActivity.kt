@@ -1,9 +1,9 @@
 package com.bignerdranch.android.otrnews
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -36,7 +36,7 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
         binding = ActivityScrollingBinding.inflate(layoutInflater)
         setContentView(binding.root)
     
-        newsDataBase =  Room.databaseBuilder(
+        newsDataBase = Room.databaseBuilder(
             this,
             NewsDataBase::class.java,
             "newsTable"
@@ -48,20 +48,11 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
         binding.updateNews.setOnClickListener {
             loadData()
         }
-    }
     
-    private fun loadFromDB() {
-        binding.progress.isVisible = true
+        searchNews()
         
-        val newsDao = newsDataBase.getNewsDao()
-    
-        lifecycleScope.launch(Dispatchers.IO) {
-            val news = newsDao.getNews()
-            
-            withContext(Dispatchers.Main) {
-                binding.progress.isVisible = false
-                adapter.updateAdapter(news)
-            }
+        binding.nonInterestingNews.setOnClickListener {
+            startActivity(Intent(this, UninterestingNewsActivity::class.java))
         }
     }
 
@@ -92,11 +83,65 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
         })
     }
     
+    private fun searchNews() {
+        binding.searchMagnifier.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(searchString: String): Boolean {
+                loadNewsBySearchString(searchString)
+                return false
+            }
+
+            override fun onQueryTextChange(searchString: String): Boolean {
+                loadNewsBySearchString(searchString)
+                return false
+            }
+        })
+    }
+    
+    private fun loadFromDB() {
+        binding.progress.isVisible = true
+        
+        val newsDao = newsDataBase.NewsDao()
+        
+        lifecycleScope.launch(Dispatchers.IO) {
+            val news = newsDao.getNoHiddenNews()
+            
+            withContext(Dispatchers.Main) {
+                binding.progress.isVisible = false
+                adapter.updateAdapter(news)
+            }
+        }
+    }
+    
+    private fun loadNewsBySearchString(searchString: String) {
+        binding.progress.isVisible = true
+        val newsDao = newsDataBase.NewsDao()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val news = newsDao.getSearchNews(searchString)
+        
+            withContext(Dispatchers.Main) {
+                binding.progress.isVisible = false
+                adapter.updateAdapter(news)
+            }
+        }
+    }
+    
     private fun insertNewsToDataBase(news: List<News>) {
-        val newsDao = newsDataBase.getNewsDao()
+        val newsDao = newsDataBase.NewsDao()
     
         lifecycleScope.launch(Dispatchers.IO) {
             newsDao.insertNews(news)
+        }
+    }
+    
+    private fun hideNews(newsItem: News) {
+        val idNews = newsItem.id
+        val newsDao = newsDataBase.NewsDao()
+        lifecycleScope.launch(Dispatchers.IO) {
+            newsDao.updateNewsHidingById(idNews, "false")
+            val news = newsDao.getNoHiddenNews()
+            withContext(Dispatchers.Main) {
+                adapter.updateAdapter(news)
+            }
         }
     }
     
@@ -107,21 +152,26 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
         binding.rcView.adapter = adapter
     }
     
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_scrolling, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-    
     override fun onClickNews(news: News) {
         startActivity(Intent(this, NewsActivity::class.java).apply {
             putExtra(INTENT_NEWS_KEY, news)
         })
+    }
+    override fun buildInterestDialog(news: News) {
+        val interestDialogBuilder = AlertDialog.Builder(this)
+        interestDialogBuilder.setMessage("Поместить новость в \"Не интересно\"?")
+        interestDialogBuilder.setNegativeButton("Нет") { dialog, _ ->
+            dialog.cancel()
+        }
+        interestDialogBuilder.setPositiveButton("Да") { dialog, _ ->
+            hideNews(news)
+            Toast.makeText(
+                this,
+                "Новость перемещена в раздел \"Не интересно\"",
+                Toast.LENGTH_SHORT
+            ).show()
+            dialog.cancel()
+        }
+        interestDialogBuilder.show()
     }
 }
