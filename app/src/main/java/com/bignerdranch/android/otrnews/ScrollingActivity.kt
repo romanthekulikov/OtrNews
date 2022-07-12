@@ -1,10 +1,12 @@
 package com.bignerdranch.android.otrnews
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -36,13 +38,13 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
         binding = ActivityScrollingBinding.inflate(layoutInflater)
         setContentView(binding.root)
     
+        initAdapter()
         newsDataBase = Room.databaseBuilder(
             this,
             NewsDataBase::class.java,
             "newsTable"
         ).build()
         
-        initAdapter()
         loadFromDB()
         
         binding.updateNews.setOnClickListener {
@@ -51,8 +53,17 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
     
         searchNews()
         
+        val uninterestingNewsLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_CANCELED) {
+                loadFromDB()
+            }
+        }
+        
         binding.nonInterestingNews.setOnClickListener {
-            startActivity(Intent(this, UninterestingNewsActivity::class.java))
+            val intent = UninterestingNewsActivity.newIntent(this)
+            uninterestingNewsLauncher.launch(intent)
         }
     }
 
@@ -69,9 +80,8 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
                 
                 val body = response.body()
                 val news = body?.data?.news ?: emptyList()
-                adapter.updateAdapter(news)
-    
                 insertNewsToDataBase(news)
+                loadFromDB()
             }
 
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
@@ -87,6 +97,8 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
         binding.searchMagnifier.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(searchString: String): Boolean {
                 loadNewsBySearchString(searchString)
+                binding.updateNews.isVisible = true
+                binding.nonInterestingNews.isVisible = true
                 return false
             }
 
@@ -127,9 +139,10 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
     
     private fun insertNewsToDataBase(news: List<News>) {
         val newsDao = newsDataBase.NewsDao()
-    
         lifecycleScope.launch(Dispatchers.IO) {
+            val hiddenNews = newsDao.getHiddenNews()
             newsDao.insertNews(news)
+            newsDao.insertNews(hiddenNews)
         }
     }
     

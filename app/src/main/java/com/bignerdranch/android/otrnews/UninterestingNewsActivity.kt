@@ -1,6 +1,7 @@
 package com.bignerdranch.android.otrnews
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -126,5 +127,11 @@ class UninterestingNewsActivity : AppCompatActivity(), AdapterNews.NewsListener 
 			dialog.cancel()
 		}
 		interestDialogBuilder.show()
+	}
+	
+	companion object {
+		fun newIntent(packageContext: Context): Intent {
+			return Intent(packageContext, UninterestingNewsActivity::class.java)
+		}
 	}
 }
