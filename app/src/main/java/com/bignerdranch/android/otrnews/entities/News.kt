@@ -25,8 +25,6 @@ data class News (
     val annotation: String,
     @SerializedName("id_resource")
     val idResource: String,
-    @SerializedName("type")
-    val type: String,
     @SerializedName("news_date_uts")
     val newsDateUts: String,
     @SerializedName("mobile_url")

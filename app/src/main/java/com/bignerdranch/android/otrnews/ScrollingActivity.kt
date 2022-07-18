@@ -43,7 +43,7 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
             this,
             NewsDataBase::class.java,
             "newsTable"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
         
         loadFromDB()
         

@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.bignerdranch.android.otrnews.entities.News
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [ News::class ]
 )
 abstract class NewsDataBase : RoomDatabase() {
