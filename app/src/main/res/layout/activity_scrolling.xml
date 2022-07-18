@@ -27,56 +27,62 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            tools:ignore="MissingConstraints">
-
-            <Button
-                android:id="@+id/update_news"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="10dp"
-                android:padding="4dp"
-                android:paddingBottom="1dp"
-                android:text="Обновить новости"
-                android:textSize="10sp"
-                tools:ignore="MissingConstraints,SmallSp"
-                tools:layout_editor_absoluteY="16dp" />
-
-            <Button
-                android:id="@+id/non_interesting_news"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginEnd="10dp"
-                android:padding="4dp"
-                android:paddingBottom="1dp"
-                android:text="Не интересные"
-                android:textSize="10sp"
-                tools:ignore="MissingConstraints,SmallSp"
-                tools:layout_editor_absoluteY="16dp" />
-
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
             <SearchView
                 android:id="@+id/search_magnifier"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:background="@drawable/magnifier_background"
-                android:queryHint="Найти новость..."
                 android:iconifiedByDefault="false"
+                android:queryHint="Найти новость..."
                 tools:layout_editor_absoluteX="58dp"
                 tools:layout_editor_absoluteY="-32dp" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:ignore="MissingConstraints">
 
+                <Button
+                    android:id="@+id/update_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="4dp"
+                    android:paddingBottom="1dp"
+                    android:text="Обновить новости"
+                    android:textSize="10sp"
+                    tools:ignore="MissingConstraints,SmallSp"
+                    tools:layout_editor_absoluteY="16dp" />
+
+                <Button
+                    android:id="@+id/non_interesting_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginEnd="10dp"
+                    android:padding="4dp"
+                    android:paddingBottom="1dp"
+                    android:text="Не интересные"
+                    android:textSize="10sp"
+                    tools:ignore="MissingConstraints,SmallSp"
+                    tools:layout_editor_absoluteY="16dp" />
+            </LinearLayout>
         </LinearLayout>
+
+
     </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcView"
         android:layout_width="409dp"
         android:layout_height="0dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

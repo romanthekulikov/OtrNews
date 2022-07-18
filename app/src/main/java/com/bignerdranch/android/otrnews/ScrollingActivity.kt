@@ -1,6 +1,6 @@
 package com.bignerdranch.android.otrnews
 
-import android.app.Activity
+ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -116,7 +116,6 @@ class ScrollingActivity : AppCompatActivity(), AdapterNews.NewsListener {
         
         lifecycleScope.launch(Dispatchers.IO) {
             val news = newsDao.getNoHiddenNews()
-            
             withContext(Dispatchers.Main) {
                 binding.progress.isVisible = false
                 adapter.updateAdapter(news)

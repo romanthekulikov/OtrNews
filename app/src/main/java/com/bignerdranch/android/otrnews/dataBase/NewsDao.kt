@@ -13,6 +13,9 @@ interface NewsDao {
     
     @Query("SELECT * FROM newsTable WHERE visibility = 'false'")
     fun getHiddenNews() : List<News>
+
+    @Query("SELECT * FROM newsTable WHERE visibility = :hided")
+    fun getNewsByHiding(hided: String) : List<News>
     
     @Query("SELECT * FROM newsTable WHERE title LIKE '%' || :searchString || '%' AND visibility = 'true'")
     fun getSearchNews(searchString: String) : List<News>
